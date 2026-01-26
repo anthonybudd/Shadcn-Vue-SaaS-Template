@@ -5,7 +5,7 @@
                 <div class="flex flex-row items-center gap-2 w-full">
                     <div class="grid gap-2 w-full">
                         <Label for="firstName">
-                            Legal First Name
+                            First Name
                         </Label>
                         <Input
                             :disabled="isLoading"
@@ -25,7 +25,7 @@
                     </div>
                     <div class="grid gap-2 w-full">
                         <Label for="lastName">
-                            Legal Last Name
+                            Last Name
                         </Label>
                         <Input
                             :disabled="isLoading"
@@ -190,6 +190,7 @@ import { ref, inject, computed, watch, onUnmounted } from 'vue';
 // import VueHcaptcha from '@hcaptcha/vue3-hcaptcha';
 import { useColorMode } from '@vueuse/core';
 import { useRouter } from 'vue-router';
+import { toast } from 'vue-sonner';
 import Joi from 'joi';
 
 import { Button } from '@/components/ui/button';
@@ -334,6 +335,7 @@ async function onSubmit() {
         if (auth.value.tos) request.tos = '2025-12-23';
         const { data } = await api.auth.signUp(request);
         onAccessToken(data.accessToken, api, $cookies, store);
+        toast.success('Account created successfully');
         router.push('/');
     } catch (error) {
         key.value++;

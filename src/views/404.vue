@@ -1,6 +1,7 @@
 <template>
     <div class="min-h-screen flex flex-col items-center justify-center px-6">
         <div class="text-center">
+            <LogoTheme class="h-14 mx-auto cursor-pointer" />
             <h1 class="text-9xl font-extrabold text-gray-300 tracking-widest">
                 404
             </h1>
@@ -11,8 +12,8 @@
                 Sorry, the page you are looking for does not exist.
             </p>
             <Button
-                class="bg-blue-600 hover:bg-blue-700"
-                @click="home()"
+                class="bg-blue-600 hover:bg-blue-700 text-white"
+                @click="router.push('/')"
             >
                 Home
             </Button>
@@ -22,6 +23,7 @@
 
 <script setup lang="ts">
 import { Button } from '@/components/ui/button';
+import { useRouter } from 'vue-router';
 
-const home = () => window.location.href = '/';
+const router = useRouter();
 </script>

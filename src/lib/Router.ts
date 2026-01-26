@@ -107,14 +107,14 @@ const router = createRouter({
                         title: 'Dashboard - ShadCN Vue SaaS Template'
                     }
                 },
-                // {
-                //     path: '/settings',
-                //     component: () => import('./../views/Settings.vue'),
-                //     meta: {
-                //         breadcrumb: 'Settings',
-                //         title: 'Settings - ShadCN Vue SaaS Template'
-                //     }
-                // }
+                {
+                    path: '/index',
+                    component: () => import('./../views/Index.vue'),
+                    meta: {
+                        breadcrumb: 'Index',
+                        title: 'Index - ShadCN Vue SaaS Template'
+                    }
+                }
             ],
         },
 

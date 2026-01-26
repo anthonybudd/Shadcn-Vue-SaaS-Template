@@ -7,16 +7,66 @@
         }"
     >
         <div class="flex items-center space-x-1">
-            <CircleCheckBig
+            <Check
                 v-if="containsMoreThan8Characters"
-                class="h-4 w-4 text-green-500"
+                class="text-green-500"
+                :size="20"
             />
-            <CircleX
+            <X
                 v-else
-                class="h-4 w-4 text-red-500"
+                class="text-red-500"
+                :size="20"
             />
             <span class="ml-1">
                 At least 8 characters
+            </span>
+        </div>
+
+        <div class="flex items-center space-x-1">
+            <Check
+                v-if="containsUppercaseAndLowercaseLetter"
+                class="text-green-500"
+                :size="20"
+            />
+            <X
+                v-else
+                class="text-red-500"
+                :size="20"
+            />
+            <span class="ml-1">
+                Must contain an uppercase and lowercase letter
+            </span>
+        </div>
+
+        <div class="flex items-center space-x-1">
+            <Check
+                v-if="containsNumber"
+                class="text-green-500"
+                :size="20"
+            />
+            <X
+                v-else
+                class="text-red-500"
+                :size="20"
+            />
+            <span class="ml-1">
+                Must contain a number
+            </span>
+        </div>
+
+        <div class="flex items-center space-x-1">
+            <Check
+                v-if="containsSpecialCharacter"
+                class="text-green-500"
+                :size="20"
+            />
+            <X
+                v-else
+                class="text-red-500"
+                :size="20"
+            />
+            <span class="ml-1">
+                Must contain a special character (&%$#@!*)
             </span>
         </div>
     </div>
@@ -25,7 +75,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 
-import { CircleCheckBig, CircleX } from 'lucide-vue-next';
+import { Check, X } from 'lucide-vue-next';
 
 const props = defineProps({
     password: {

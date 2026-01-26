@@ -75,7 +75,7 @@
 
                 <Button
                     :loading="isLoading"
-                    :disabled="!isValid || isLoading"
+                    :disabled="isLoading"
                 >
                     Continue
                 </Button>
@@ -147,11 +147,11 @@ const auth = ref({
     // htoken: '',
 });
 
-const isValid = computed(() => {
-    const { error } = validationSchema.validate(auth.value);
-    if (error) return false;
-    return true;
-});
+// const isValid = computed(() => {
+//     const { error } = validationSchema.validate(auth.value);
+//     if (error) return false;
+//     return true;
+// });
 
 if (isDev) {
     auth.value.email = 'user@example.com';

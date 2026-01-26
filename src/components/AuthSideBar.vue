@@ -1,8 +1,8 @@
 <template>
-    <div class="relative hidden h-full flex-col bg-muted p-10 text-left text-white dark:border-r lg:flex">
+    <div class="relative hidden h-full flex-col p-10 text-left text-white dark:border-r lg:flex">
         <div
-            class="absolute inset-0 rounded-2xl"
-            style="background: linear-gradient(135deg, #134e4a 0%, #065f46 70%), linear-gradient(to bottom, transparent 70%, #030712 98%, #101A39 100%);"
+            class="absolute inset-0 rounded-2xl overflow-hidden"
+            style="background: linear-gradient(315deg, #1C1C1C, #011757)"
         />
         <div class="relative z-20 flex items-center text-lg font-medium">
             <Logo class="max-w-1/3" />

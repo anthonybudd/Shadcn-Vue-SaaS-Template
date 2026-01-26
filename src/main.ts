@@ -3,6 +3,7 @@ import LogoDark from '@/assets/LogoDark.svg';
 import VueCookies from 'vue-cookies';
 import Logo from '@/assets/Logo.svg';
 import Icon from '@/assets/Icon.svg';
+import LogoTheme from '@/components/LogoTheme.vue';
 import Router from '@/lib/Router';
 import Store from '@/lib/Store';
 import { createApp } from 'vue';
@@ -24,6 +25,7 @@ createApp(App)
     .use(VueCookies, { expires: '7d' })
     .component('Logo', Logo)
     .component('LogoDark', LogoDark)
+    .component('LogoTheme', LogoTheme)
     .component('Icon', Icon)
     .use({
         install: (app: any) => {

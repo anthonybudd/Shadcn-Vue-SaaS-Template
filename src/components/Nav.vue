@@ -1,79 +1,106 @@
 <template>
-    <div
-        class="fixed h-full md:h-auto top-0 left-0 w-[80vw] min-w-2xs md:static md:w-[250px] lg:w-[300px] md:rounded-lg px-4 pt-8 gap-8 flex flex-col z-40 transition-all duration-300 ease-in-out md:translate-x-0 overflow-y-auto"
-        style="background: linear-gradient(135deg, #134e4a 0%, #065f46 70%), linear-gradient(to bottom, transparent 70%, #030712 98%, #101A39 100%);"
-        :class="{
-            '-translate-x-full': !isNavActive,
-            'translate-x-0': isNavActive,
-            'active': isNavActive,
-            'md:translate-x-0': true
-        }"
-    >
-        <div class="flex items-center justify-between w-full">
-            <div class="flex items-center px-4">
-                <router-link to="/">
-                    <Logo class="w-full cursor-pointer" />
-                </router-link>
+    <div class="fixed top-0 left-0 right-0 z-50 bg-secondary dark:bg-black">
+        <nav class="border-b">
+            <div class="hidden lg:block relative">
+                <div class="flex items-center h-[66px] py-3">
+                    <router-link
+                        class="flex-shrink-0 px-6 cursor-pointer"
+                        to="/"
+                    >
+                        <LogoTheme class="w-48 cursor-pointer" />
+                    </router-link>
+                    <div class="flex-1 flex items-center ml-8">
+                        <div class="flex items-center space-x-4 lg:space-x-6">
+                            <router-link
+                                v-for="item in menuItems"
+                                :key="item.to"
+                                :to="item.to"
+                                class="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+                                :class="{ 'text-primary': $route.path === item.to }"
+                            >
+                                <span class="inline-flex items-center gap-1">
+                                    <component
+                                        :is="item.icon"
+                                        class="w-4 h-4 inline-block"
+                                    />
+                                    {{ item.label }}
+                                </span>
+                            </router-link>
+                        </div>
+                    </div>
+                    <div class="flex items-center pr-6">
+                        <div class="ml-6">
+                            <div class="relative">
+                                <DropdownMenu>
+                                    <DropdownMenuTrigger as-child>
+                                        <button class="flex items-center space-x-2 rounded-lg transition-colors cursor-pointer">
+                                            <img
+                                                alt="Profile Image"
+                                                src="https://github.com/anthonybudd.png?size=120"
+                                                class="rounded-full object-cover w-12 h-12 text-sm border-1 bg-black border-[#0099FF]"
+                                            />
+                                        </button>
+                                    </DropdownMenuTrigger>
+                                    <MainMenuDropDown />
+                                </DropdownMenu>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
+            <div class="lg:hidden">
+                <div class="px-4">
+                    <div class="flex items-center justify-between h-16">
+                        <router-link
+                            to="/"
+                            class="flex items-center"
+                        >
+                            <LogoTheme class="w-48 cursor-pointer" />
+                        </router-link>
 
-        <div class="flex flex-col gap-2.5">
-            <div
-                v-for="item in menuItems"
-                :key="item.path"
-                @click="router.push(item.path)"
-                class="w-full py-3 px-4 hover:bg-teal-900/50 rounded-lg flex flex-row items-center gap-2 cursor-pointer transition-all duration-300 ease-in-out"
-                :class="{ 'bg-teal-900': router.currentRoute.value.path == item.path }"
-            >
-                <component
-                    :is="item.icon"
-                    class="w-5 h-5 text-white"
-                />
-                <div class="text-white font-medium leading-5 flex-1">{{ item.label }}</div>
+                        <DropdownMenu>
+                            <DropdownMenuTrigger as-child>
+                                <button class="p-2 rounded-lg hover:bg-white/10 transition-colors cursor-pointer">
+                                    <Menu />
+                                </button>
+                            </DropdownMenuTrigger>
+                            <MainMenuDropDown />
+                        </DropdownMenu>
+                    </div>
+                </div>
             </div>
-        </div>
-
-        <div class="mt-auto mb-4 flex flex-col gap-2.5">
-            <div
-                @click="logout()"
-                class="w-full py-3 px-4 hover:bg-teal-900/50 rounded-lg flex flex-row items-center gap-2 cursor-pointer transition-all duration-300 ease-in-out"
-            >
-                <SVGLogout class="w-5 h-5" />
-                <div class="justify-start text-white text-base font-medium font-['Plus_Jakarta_Sans'] leading-5">Log Out</div>
-            </div>
-        </div>
+        </nav>
     </div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { LayoutGrid, ReceiptText, User, Menu } from 'lucide-vue-next';
+import { DropdownMenu, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import MainMenuDropDown from '@/components/MainMenuDropDown.vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
-
-import SVGDashboard from '@/assets/nav/Dashboard.svg';
-import SVGSettings from '@/assets/nav/Settings.svg';
-import SVGLogout from '@/assets/nav/Logout.svg';
+import { computed } from 'vue';
 
 const router = useRouter();
 const store = useStore();
 
-const isNavActive = computed({
-    get: () => store.getters.isNavActive,
-    set: (value: boolean) => store.commit('isNavActive', value),
-});
+const group = computed(() => store.state.group);
 
-const logout = () => router.push('/logout');
-
-let menuItems = ref<any[]>([
+const menuItems = [
     {
         label: 'Dashboard',
-        icon: SVGDashboard,
-        path: '/',
+        icon: LayoutGrid,
+        to: '/',
     },
     {
-        label: 'Settings',
-        icon: SVGSettings,
-        path: '/settings',
+        label: 'Index',
+        icon: ReceiptText,
+        to: '/index',
     },
-]);
+    {
+        label: 'Account',
+        icon: User,
+        to: '/account',
+    },
+];
 </script>

@@ -4,9 +4,8 @@ export default async function onAccessToken(accessToken: string, api: any, $cook
     const { data: user } = await api.user.get();
     store.commit('setUser', user);
 
-    if (user.type === 'Admin') {
-        const { data: stats } = await api.admin.users.stats();
-        store.commit('setLeadsCount', stats.leads);
-        store.commit('setDealsCount', stats.deals);
+
+    if (user.groups.length > 1) {
+        store.commit('setGroup', user.groups[0]);
     }
 };
