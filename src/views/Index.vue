@@ -6,7 +6,7 @@
             </h1>
         </div>
         <p class="text-muted-foreground mb-1">
-            A generic index page.
+            A generic index page for listing items.
         </p>
 
         <div class="grid grid-cols-2 md:grid-cols-4 gap-2 mb-2">
@@ -16,19 +16,6 @@
                     placeholder="Search..."
                     class="w-full"
                 />
-            </div>
-
-            <div class="col-span-2 flex flex-row gap-x-2">
-                <div>
-                    <!-- <TransactionStatusFilter @onChange="onChangeStatus" /> -->
-                </div>
-                <div class="flex felx-row items-center space-x-2 mt-[-4px]">
-                    <Switch
-                        id="isTestMode"
-                        v-model="isTestMode"
-                    />
-                    <Label for="isTestMode">Test Mode</Label>
-                </div>
             </div>
         </div>
 
@@ -40,8 +27,11 @@
                         <TableHead class="w-[120px]">
                             Created
                         </TableHead>
-                        <TableHead>
+                        <TableHead class="w-[120px]">
                             Status
+                        </TableHead>
+                        <TableHead>
+                            Name
                         </TableHead>
                         <TableHead>
                             Value
@@ -59,10 +49,15 @@
                             {{ $formatDate(item.createdAt) }}
                         </TableCell>
                         <TableCell>
-
+                            <Badge variant="secondary">
+                                {{ item.status }}
+                            </Badge>
                         </TableCell>
                         <TableCell>
-
+                            {{ item.name }}
+                        </TableCell>
+                        <TableCell>
+                            {{ item.value }}
                         </TableCell>
                     </TableRow>
                 </TableBody>
@@ -105,19 +100,14 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-// import TransactionStatusFilter from '@/components/TransactionStatusFilter.vue';
-import { inject, onMounted, ref, watch, computed } from 'vue';
-import { Switch } from "@/components/ui/switch";
+import { inject, onMounted, ref, computed } from 'vue';
 import { Badge } from "@/components/ui/badge";
-import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { useRouter } from 'vue-router';
-import { useStore } from 'vuex';
 
 const errorHandler = inject<any>('errorHandler');
 const api = inject<any>('api');
 const router = useRouter();
-const store = useStore();
 
 const items = ref<any[]>([]);
 const isLoading = ref(false);
@@ -132,13 +122,48 @@ onMounted(async () => getData());
 const getData = async () => {
     try {
         isLoading.value = true;
-        // if (isTestMode.value) {
-        //     const { data } = await api.testTransactions.index();
-        //     transactions.value = data;
-        // } else {
-        //     const { data } = await api.transactions.index();
-        //     transactions.value = data;
-        // }
+
+        // Add your API methods to src/api/ModelName.ts
+        // const { data } = await api.ModelName.index();
+        // items.value = data;
+
+        items.value = [
+            {
+                id: 1,
+                createdAt: '2021-01-01',
+                status: 'Active',
+                name: 'Item 1',
+                value: 100,
+            },
+            {
+                id: 2,
+                createdAt: '2021-01-02',
+                status: 'Inactive',
+                name: 'Item 2',
+                value: 200,
+            },
+            {
+                id: 3,
+                createdAt: '2021-01-03',
+                status: 'Pending',
+                name: 'Item 3',
+                value: 300,
+            },
+            {
+                id: 4,
+                createdAt: '2021-01-04',
+                status: 'Completed',
+                name: 'Item 4',
+                value: 400,
+            },
+            {
+                id: 5,
+                createdAt: '2021-01-05',
+                status: 'Cancelled',
+                name: 'Item 5',
+                value: 500,
+            },
+        ];
     } catch (error) {
         errorHandler(error);
     } finally {
@@ -146,11 +171,5 @@ const getData = async () => {
     }
 };
 
-const onChangeStatus = (s: any[]) => {
-    statuses.value = s;
-};
-
-const onClickRow = (item: any) => {
-    router.push(`/items/${item.id}`);
-};
+const onClickRow = (item: any) => router.push(`/items/${item.id}`);
 </script>

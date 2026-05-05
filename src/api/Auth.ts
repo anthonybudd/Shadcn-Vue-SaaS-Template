@@ -34,7 +34,7 @@ class Auth extends Service {
     }
 
     signUpWithInvite(data: any) {
-        return this.axios.post(`/auth/sign-up/invite`, data);
+        return this.axios.post(`/auth/sign-up/with-invite`, data);
     }
 
     resetPassword(data: any) {

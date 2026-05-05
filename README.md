@@ -6,7 +6,7 @@
 
 A minimal SaaS template built using ShadCN and Vuetify 3. Built to work out of the box with [AnthonyBudd/Express-TS-Api-Template](https://github.com/anthonybudd/express-ts-api-template) as the backend.
 
-- 🔐 Login, Sign-up, ForgotPassword
+- 🔐 Login, Sign-up, ForgotPassword, 2FA
 - 📈 Dashboard
 - 👥 Manage Account/Group
 

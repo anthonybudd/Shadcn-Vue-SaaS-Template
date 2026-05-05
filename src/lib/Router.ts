@@ -38,7 +38,6 @@ const authGuard = async (_: any, __: any, next: any, redirect = true) => {
 const router = createRouter({
     history: createWebHistory(),
     routes: [
-        // Auth / Onboarding
         {
             path: '/',
             component: () => import('./../layouts/Auth.vue'),
@@ -113,6 +112,22 @@ const router = createRouter({
                     meta: {
                         breadcrumb: 'Index',
                         title: 'Index - ShadCN Vue SaaS Template'
+                    }
+                },
+                {
+                    path: '/items/:id',
+                    component: () => import('./../views/Item.vue'),
+                    meta: {
+                        breadcrumb: 'Item',
+                        title: 'Item - ShadCN Vue SaaS Template'
+                    }
+                },
+                {
+                    path: '/account',
+                    component: () => import('./../views/Account.vue'),
+                    meta: {
+                        breadcrumb: 'Account',
+                        title: 'Account - ShadCN Vue SaaS Template'
                     }
                 }
             ],
